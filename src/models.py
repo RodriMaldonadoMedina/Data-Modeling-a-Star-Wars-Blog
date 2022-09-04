@@ -1,6 +1,6 @@
 import os
 import sys
-from sqlalchemy import Column, ForeignKey, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import create_engine
@@ -15,7 +15,7 @@ class User(Base):
     last_name = Column(String(30), nullable=False)
     password = Column(String(8), nullable=False, unique=True)
     email = Column(String(40), nullable=False)
-    suscription = Column(datetime(), nullable=False)
+    suscription = Column(DateTime(), nullable=False)
 
     def to_dict(self):
         return {
@@ -70,9 +70,9 @@ class Nave(Base):
     __tablename__='nave'
     id = Column(Integer, primary_key=True)
     name = Column(String(60), nullable=False)
-    costo_creditos = Column(int(15), nullable=False)
-    pasajeros = Column(int(10), nullable=True)
-    capacidad_carga = Column(int(20), nullable=True)
+    costo_creditos = Column(Integer, nullable=False)
+    pasajeros = Column(Integer, nullable=True)
+    capacidad_carga = Column(Integer, nullable=True)
     clase = Column(String(15), nullable=False)
 
     def to_dict(self):
@@ -88,8 +88,8 @@ class Nave(Base):
 class Personaje_Favorito(Base):
     __tablename__='personaje_favorito'
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey(user.id))
-    personaje_id = Column(integer, ForeignKey(personaje.id))
+    user_id = Column(Integer, ForeignKey(User.id))
+    personaje_id = Column(Integer, ForeignKey(Personaje.id))
 
     def to_dict(self):
         return {
@@ -101,8 +101,8 @@ class Personaje_Favorito(Base):
 class Planeta_Favorito(Base):
     __tablename__='planeta_favorito'
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey(user.id))
-    planeta_id = Column(integer, ForeignKey(planeta.id))
+    user_id = Column(Integer, ForeignKey(User.id))
+    planeta_id = Column(Integer, ForeignKey(Planeta.id))
 
     def to_dict(self):
         return {
@@ -114,8 +114,8 @@ class Planeta_Favorito(Base):
 class Nave_Favorito(Base):
     __tablename__='nave_favorito'
     id = Column(Integer, primary_key=True)
-    user_id = Column(Integer, ForeignKey(user.id))
-    nave_id = Column(integer, ForeignKey(nave.id))
+    user_id = Column(Integer, ForeignKey(User.id))
+    nave_id = Column(Integer, ForeignKey(Nave.id))
 
     def to_dict(self):
         return {
